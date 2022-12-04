@@ -27,6 +27,8 @@ Coming soon!
 3. Enter your Hypothesis Username and the name of the Notebook to import your annotations into. 
 4. Customise the feed poll frequency if desired. 
 
+**note: the plugin will not work if you leave the user empty or set it to 'test'**
+
 ## Usage
 
 Once configured the plugin will poll hypothes.is every few minutes (15 by default but configurable in the options menu) and check for new annotations. 
