@@ -121,12 +121,9 @@ async function checkAnnotations(){
 			parent_id: notebook.id,
 			source_url: jsonLink,
 			body: generateNoteBody(entry, annotationObject, username),
-			application_data: JSON.stringify(annotationObject)
 		})
 
 		await tagEntry(note.id, annotationObject)
-
-		
 
 	})
 
@@ -140,9 +137,9 @@ joplin.plugins.register({
 		await joplin.settings.registerSettings({
 			feedUser: {public: true, value: "test", type: SettingItemType.String, label: "Hypothes.is Username", section:"hypothesis"},
 			feedRefresh: {public: true, value: "15", type: SettingItemType.Int, label: "Feed Refresh Interval (Minutes)", section: "hypothesis"},
-			hypothesisNotebook: {public:true, value:"Annotations", type: SettingItemType.String, label:"Annotations Notebook"},
+			hypothesisNotebook: {public:true, value:"Annotations", type: SettingItemType.String, label:"Annotations Notebook", section: "hypothesis"},
 			lastFeedRun: {public: false, value: 0, type: SettingItemType.Object, label: "Last Run Time", section:"hypothesis"},
-			resetLastRun: {public:true, value: null, type: SettingItemType.Button, label:"Reset Last Run Time (force redownload)", section:"hypothesis"}
+			//resetLastRun: {public:true, value: null, type: SettingItemType.Button, label:"Reset Last Run Time (force redownload)", section:"hypothesis"}
 		})
 
 
