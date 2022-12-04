@@ -6,7 +6,7 @@
 	"name": "Joplin Hypothes.is",
 	"description": "Monitor and automatically add hypothesis annotations to your joplin notebooks",
 	"author": "James Ravenscroft",
-	"homepage_url": "https://brainsteam.co.uk/pages/joplin-hypothesis",
+	"homepage_url": "https://github.com/ravenscroftj/joplin-hypothesis",
 	"repository_url": "https://github.com/ravenscroftj/joplin-hypothesis",
 	"keywords": ["annotations","hypothesis","sync"],
 	"categories": []

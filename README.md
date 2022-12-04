@@ -5,15 +5,20 @@ This plugin allows users to automatically import their [hypothes.is](https://hyp
 ## Features
 
 - Import annotations from a Hypothes.is user RSS feed into Joplin
-- Add annotations to existing Joplin notes or create new ones
 - Customisable feed polling frequency allowing the user to pull down new annotations as they are added
 
 ## Installation
 
+### Manual install via JPL
+
 1. Install the latest version of Joplin
-2. Download the Joplin Hypothes.is RSS Plugin from the Joplin Plugin Store or the GitHub releases page
+2. Download the Joplin Hypothes.is RSS Plugin from the [GitHub releases page](https://github.com/ravenscroftj/joplin-hypothesis/releases)
 3. In Joplin, go to the `Tools` menu and select `Plugins`
-4. Click on the `Install Plugin` button and select the downloaded plugin file
+4. Click on the `Install Plugin` button and select the downloaded plugin `.jpl` file
+
+### Install from Joplin Plugin Directory
+
+Coming soon!
 
 ## Configuration
 
@@ -21,6 +26,17 @@ This plugin allows users to automatically import their [hypothes.is](https://hyp
 2. Select `Hypothes.is` in the options sidebar.
 3. Enter your Hypothesis Username and the name of the Notebook to import your annotations into. 
 4. Customise the feed poll frequency if desired. 
+
+## Usage
+
+Once configured the plugin will poll hypothes.is every few minutes (15 by default but configurable in the options menu) and check for new annotations. 
+
+## Current Limitations
+
+I've tried to pre-emptively note down some existing problems in [issues](https://github.com/ravenscroftj/joplin-hypothesis/issues). Some of the more prominent/annoying issues you might encounter are:
+
+ - One note is created per annotation - therefore if you annotate the same document multiple times you will still end up with multiple notes.
+ - The plugin checks the note's `source_url` field (as set by the web clipper when you grab a copy of a page) to determine whether or not it needs to grab an annotation. That means that if you delete an existing annotation it will be recreated.
 
 
 ## Support
