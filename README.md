@@ -1,24 +1,28 @@
-# Joplin Plugin
+# Joplin Hypothes.is Plugin
 
-This is a template to create a new Joplin plugin.
+This plugin allows users to automatically import their [hypothes.is](https://hypothes.is/) annotations into their Joplin notes by monitoring their user Atom RSS feed.
 
-The main two files you will want to look at are:
+## Features
 
-- `/src/index.ts`, which contains the entry point for the plugin source code.
-- `/src/manifest.json`, which is the plugin manifest. It contains information such as the plugin a name, version, etc.
+- Import annotations from a Hypothes.is user RSS feed into Joplin
+- Add annotations to existing Joplin notes or create new ones
+- Customisable feed polling frequency allowing the user to pull down new annotations as they are added
 
-## Building the plugin
+## Installation
 
-The plugin is built using Webpack, which creates the compiled code in `/dist`. A JPL archive will also be created at the root, which can use to distribute the plugin.
+1. Install the latest version of Joplin
+2. Download the Joplin Hypothes.is RSS Plugin from the Joplin Plugin Store or the GitHub releases page
+3. In Joplin, go to the `Tools` menu and select `Plugins`
+4. Click on the `Install Plugin` button and select the downloaded plugin file
 
-To build the plugin, simply run `npm run dist`.
+## Configuration
 
-The project is setup to use TypeScript, although you can change the configuration to use plain JavaScript.
+1. In Joplin, go to the `Tools` menu and select `Options`.
+2. Select `Hypothes.is` in the options sidebar.
+3. Enter your Hypothesis Username and the name of the Notebook to import your annotations into. 
+4. Customise the feed poll frequency if desired. 
 
-## Updating the plugin framework
 
-To update the plugin framework, run `npm run update`.
+## Support
 
-In general this command tries to do the right thing - in particular it's going to merge the changes in package.json and .gitignore instead of overwriting. It will also leave "/src" as well as README.md untouched.
-
-The file that may cause problem is "webpack.config.js" because it's going to be overwritten. For that reason, if you want to change it, consider creating a separate JavaScript file and include it in webpack.config.js. That way, when you update, you only have to restore the line that include your file.
+If you have any questions or encounter any issues, please [file a bug report on the GitHub issues page](https://github.com/ravenscroftj/joplin-hypothesis/issues) for this plugin.

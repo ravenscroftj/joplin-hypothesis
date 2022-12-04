@@ -1,6 +1,7 @@
 {
   "name": "joplin-plugin-hypothesis",
-  "version": "1.0.0",
+  "version": "0.0,1",
+  "author": "James Ravenscroft",
   "scripts": {
     "dist": "webpack --joplin-plugin-config buildMain && webpack --joplin-plugin-config buildExtraScripts && webpack --joplin-plugin-config createArchive",
     "prepare": "npm run dist",
