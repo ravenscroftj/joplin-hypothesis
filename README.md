@@ -38,8 +38,10 @@ Once configured the plugin will poll hypothes.is every few minutes (15 by defaul
 I've tried to pre-emptively note down some existing problems in [issues](https://github.com/ravenscroftj/joplin-hypothesis/issues). Some of the more prominent/annoying issues you might encounter are:
 
  - One note is created per annotation - therefore if you annotate the same document multiple times you will still end up with multiple notes.
- - The plugin checks the note's `source_url` field (as set by the web clipper when you grab a copy of a page) to determine whether or not it needs to grab an annotation. That means that if you delete an existing annotation it will be recreated.
 
+## Re-importing Old Annotations
+
+The plugin will keep a record of the most recently created annotations within your hypothes.is account and will only attempt to download newer annotations. If you want to re-download all of your historical annotations then you can reset this value via the `Reset Hypothes.is Last Retrieval` option in the Tools menu.
 
 ## Support
 
