@@ -19,7 +19,7 @@ export interface Annotation {
     uri: string,
     text: string,
     tags: string[],
-    target: AnnotationTarget
+    target: AnnotationTarget[]
     hidden: boolean
     flagged: boolean
     user_info: {
