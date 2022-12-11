@@ -45,4 +45,4 @@ The plugin will keep a record of the most recently created annotations within yo
 
 ## Support
 
-If you have any questions or encounter any issues, please [file a bug report on the GitHub issues page](https://github.com/ravenscroftj/joplin-hypothesis/issues) for this plugin.
+If you have any questions or encounter any issues, please [file a bug report on the GitHub issues page](https://github.com/ravenscroftj/joplin-hypothesis/issues) for this plugin. Contact me via my personal site [brainsteam](https://brainsteam.co.uk).

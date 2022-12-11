@@ -171,6 +171,13 @@ async function checkAnnotations(){
 
 }
 
+/**
+ * This function processses the annotations returned from a single call to the hypothes.is API
+ * 
+ * @param response API response from hypothes.is
+ * @param notebookId the ID of the notebook that annotations reside in
+ * @param username the username being monitored (for generation of friendly links)
+ */
 async function handleApiResponse(response: any, notebookId: string, username: string) {
 
 	// handle tags
@@ -219,6 +226,8 @@ async function handleApiResponse(response: any, notebookId: string, username: st
 joplin.plugins.register({
 	onStart: async function() {
 
+		
+
 		await joplin.settings.registerSection("hypothesis", {label:"Hypothes.is", description:"Joplin Hypothes.is settings"})
 		await joplin.settings.registerSettings({
 			feedUser: {public: true, value: "test", type: SettingItemType.String, label: "Hypothes.is Username", section:"hypothesis"},
@@ -237,27 +246,68 @@ joplin.plugins.register({
 			},
 		});
 
+		let isSyncing = false
+		let runDeferred = false
+
+
+		joplin.workspace.onSyncStart( () =>{
+			isSyncing = true
+		})
+
+		joplin.workspace.onSyncComplete(() => {
+			isSyncing = false
+
+			if(runDeferred) {
+				console.log("Running deferred annotation sync post joplin sync")
+				checkAnnotations()
+				runDeferred = false
+			}
+		})
 
 		await joplin.views.menuItems.create('toolsResetRetrievalTime', 'resetRetrievalTime', MenuItemLocation.Tools);
 
 		let intervalHandle : undefined | NodeJS.Timeout 
 
 
+
+		const deferredCheckAnnotations = () => {
+			if(isSyncing){
+				console.log("Run annotation pull after next joplin sync completes")
+				runDeferred = true
+			}else{
+				checkAnnotations()
+			}
+		}
+
+
 		//kick off first run and then set feed refresh interval
 		(async () => {
-			console.log("Run initial sync")
-			await checkAnnotations()
+
+			// use global sync target setting to find out whether or not to wait for sync locks
+			// uses undocumented setting names extracted from https://github.com/laurent22/joplin/blob/dev/packages/lib/models/Setting.ts#L142
+			// as suggested by Laurent in the dev docs here: https://joplinapp.org/api/references/plugin_api/classes/joplinsettings.html#globalvalue
+			const syncTarget = await joplin.settings.globalValue('sync.target')
+			if(syncTarget > 0) {
+
+				console.log("Wait for first joplin sync before running initial hypothesis sync")
+				runDeferred = true
+
+			}else{
+				console.log("Run initial hypothesis sync")
+				await deferredCheckAnnotations()
+			}
+
+
+
 			const feedRefreshInterval = await joplin.settings.value('feedRefresh')
-			console.log(`Setting feed refresh to ${feedRefreshInterval} minutes`)
-			intervalHandle = setInterval(checkAnnotations, feedRefreshInterval * 1000 * 60 )
+			console.log(`Setting h feed refresh to ${feedRefreshInterval} minutes`)
+			intervalHandle = setInterval(deferredCheckAnnotations, feedRefreshInterval * 1000 * 60 )
 		})()
-
-
 
 		await joplin.settings.onChange(async (evt)=>{
 
 			//trigger immediate update of annotation check
-			await checkAnnotations()
+			await deferredCheckAnnotations()
 			
 			if(intervalHandle) {
 				console.info("Clear interval for check annotations function")
@@ -265,8 +315,8 @@ joplin.plugins.register({
 			}
 			
 			const feedRefreshInterval = await joplin.settings.value('feedRefresh')
-			console.log(`Setting feed refresh to ${feedRefreshInterval} minutes`)
-			intervalHandle = setInterval(checkAnnotations, feedRefreshInterval * 1000 * 60 )
+			console.log(`Setting h feed refresh to ${feedRefreshInterval} minutes`)
+			intervalHandle = setInterval(deferredCheckAnnotations, feedRefreshInterval * 1000 * 60 )
 
 			
 		})
