@@ -18,7 +18,10 @@ This plugin allows users to automatically import their [hypothes.is](https://hyp
 
 ### Install from Joplin Plugin Directory
 
-Coming soon!
+1. From Joplin go to the Tools menu and click on `Plugins`
+2. In the Plugins view enter `hypothesis` in the search bar
+3. Find `Joplin Hypothesis` and click install.
+4. Restart Joplin
 
 ## Configuration
 
