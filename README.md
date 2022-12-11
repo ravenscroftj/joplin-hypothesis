@@ -35,9 +35,7 @@ Once configured the plugin will poll hypothes.is every few minutes (15 by defaul
 
 ## Current Limitations
 
-I've tried to pre-emptively note down some existing problems in [issues](https://github.com/ravenscroftj/joplin-hypothesis/issues). Some of the more prominent/annoying issues you might encounter are:
-
- - One note is created per annotation - therefore if you annotate the same document multiple times you will still end up with multiple notes.
+I've tried to pre-emptively note down some existing problems in [issues](https://github.com/ravenscroftj/joplin-hypothesis/issues). 
 
 ## Re-importing Old Annotations
 
