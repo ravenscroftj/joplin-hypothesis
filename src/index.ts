@@ -141,12 +141,17 @@ async function checkAnnotations(){
 		const r = await fetch(HYPOTHESIS_ANNOTATION_API + "?" + encodeGetParams(query)) //`${HYPOTHESIS_ANNOTATION_API}`)
 		let response = await r.json()
 
-		
-		if(response.rows.length < 1){
+		console.log(`Got ${response.rows.length} rows`)
+
+		if(response.rows.length < 20){
+
 			moreAnnotations = false;
-			break
+
+			if (response.rows.length < 1){
+				break
+			}
 		}
-	
+
 
 		// set the last run date as the most recent annotation's created date
 		let dates = response.rows.map( (row) => new Date(row.created) ).sort( (a,b) => b-a )
@@ -165,6 +170,10 @@ async function checkAnnotations(){
 	}
 
 	// store the lastDate
+
+	//round to the next second to avoid double fetching most recent entry
+	lastDate.setSeconds(lastDate.getSeconds()+1)
+
 	joplin.settings.setValue("lastFeedRun", lastDate)
 
 
@@ -305,6 +314,11 @@ joplin.plugins.register({
 		})()
 
 		await joplin.settings.onChange(async (evt)=>{
+
+			// we don't waant to rerun if the only change was the lastFeedRun
+			if( (evt.keys.length == 1) && evt.keys.includes('lastFeedRun') ){
+				return
+			}
 
 			//trigger immediate update of annotation check
 			await deferredCheckAnnotations()
