@@ -218,10 +218,10 @@ async function handleApiResponse(response: any, notebookId: string, username: st
 		if(res.items?.length > 0){
 			return
 		}
+
 		
-		// create the note
 		const note = await joplin.data.post(['notes'], {}, {
-			title: entry.document.title,
+			title: Array.isArray(entry.document.title) ? entry.document.title[0] : entry.document.title,
 			parent_id: notebookId,
 			source_url: entry.links.json,
 			body: generateNoteBody(entry, username),
