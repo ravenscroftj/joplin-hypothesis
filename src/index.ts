@@ -1,9 +1,7 @@
 import joplin from 'api';
 import { MenuItemLocation, SettingItemType } from 'api/types';
-import * as xml2js from 'xml2js'
 
-import { AtomEntry, AtomFeed, AtomLink, getJSONLink } from './atom';
-import { Annotation } from './hypothesis';
+import { Annotation, HypothesisResponse } from './hypothesis';
 
 //const HYPOTHESIS_FEED_URL = "https://hypothes.is/stream.atom?user="
 
@@ -33,7 +31,7 @@ async function upsertNotebook(){
 
 function generateNoteBody(entry: Annotation, username: string) {
 
-	let content : string[] = []
+	const content : string[] = []
 
 	// add context
 	content.push(`[Web annotation](${entry.links.html}) by [${entry.user_info.display_name}](${USER_PAGE_PREFIX}/${username}) \n\n`)
@@ -43,7 +41,7 @@ function generateNoteBody(entry: Annotation, username: string) {
 
 	if( (entry.target?.length >0) && (entry.target[0].selector) ){
 		for(let i=0; i < entry.target[0].selector.length; i++){
-			let selector = entry.target[0].selector[i]
+			const selector = entry.target[0].selector[i]
 			
 			if (selector.type == "TextQuoteSelector") {
 				content.push(`\n<blockquote>${selector.exact}</blockquote>`)
@@ -139,7 +137,7 @@ async function checkAnnotations(){
 		console.log("Call Hypothesis API with query args:", query)
 
 		const r = await fetch(HYPOTHESIS_ANNOTATION_API + "?" + encodeGetParams(query)) //`${HYPOTHESIS_ANNOTATION_API}`)
-		let response = await r.json()
+		const response = await r.json()
 
 		console.log(`Got ${response.rows.length} rows`)
 
@@ -154,7 +152,7 @@ async function checkAnnotations(){
 
 
 		// set the last run date as the most recent annotation's created date
-		let dates = response.rows.map( (row) => new Date(row.created) ).sort( (a,b) => b-a )
+		const dates = response.rows.map( (row) => new Date(row.created) ).sort( (a,b) => b-a )
 
 		lastDate = dates[0]
 
@@ -187,7 +185,7 @@ async function checkAnnotations(){
  * @param notebookId the ID of the notebook that annotations reside in
  * @param username the username being monitored (for generation of friendly links)
  */
-async function handleApiResponse(response: any, notebookId: string, username: string) {
+async function handleApiResponse(response: HypothesisResponse, notebookId: string, username: string) {
 
 	// handle tags
 	const tags : Set<string> = new Set()

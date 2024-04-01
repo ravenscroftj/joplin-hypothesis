@@ -22,12 +22,22 @@ export interface Annotation {
     target: AnnotationTarget[]
     hidden: boolean
     flagged: boolean
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     user_info: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         display_name: string
     }
     links:{
         html: string,
         incontext: string,
         json: string
+    },
+    document:{
+        title: string[]
     }
+}
+
+export interface HypothesisResponse{
+    total: number,
+    rows: Annotation[]
 }
